@@ -1,18 +1,21 @@
 from bs4 import BeautifulSoup
 import urllib2
 
-# 1. Get html page
-url = 'http://m.news.naver.com/read.nhn?oid=056&aid=0010114544&sid1=101&mode=LSD'
+# 1. Get News URL from Date
 
-# 1.1 Simple code
+
+# 2. Get Reply Page from News URL
+#  gno=news[기사 url oid number],[기사 url aid number]
+#oid = "421" # revise!
+#aid = "0001207435" # revise!
+#gno = "gno=news"+oid+aid
+#url = "http://comment.news.naver.com/comment/all.nhn?serviceId=news&"+gno+"&sort=newest&page=2"
+url = 'http://comment.news.naver.com/comment/all.nhn?serviceId=news&gno=news421,0001207435&sort=newest&page=2'
 page = urllib2.urlopen(url)
 soup = BeautifulSoup(page.read())
 
+author = soup.find_all('div', {'class': 'author'})
+nickname = author[0].find('span').text
 
-# 2. Extract informations which we want to Get
 
-# 2.1 Extracting division
-cmt_list = soup.find_all('div',{'class': 'comment_area _comment_area comment_area_over'})
-#cmt = cmt_list.find('p').text.encode('utf-8')
-print cmt_list
 
